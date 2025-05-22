@@ -1,0 +1,204 @@
+@import 'tailwindcss';
+
+.only-tailwind {
+  background-image: linear-gradient(to bottom, #1d5fae, transparent) !important;
+  @apply bg-gradient-to-b from-blue-400 to-transparent dark:from-blue-900
+  w-full h-full absolute top-0 left-0 z-0
+}
+
+body{
+  background-color: var(--color-background);
+  color: var(--color-primaryText);
+}
+
+.only-tailwind .container {
+  @apply py-8 px-8 mx-auto max-w-screen-xl lg:py-16 grid lg:grid-cols-2 gap-8 lg:gap-16;
+}
+
+.only-tailwind .content {
+  @apply flex flex-col justify-center;
+}
+
+.only-tailwind h1 {
+  @apply mb-4 text-4xl font-extrabold tracking-tight leading-none text-gray-900 md:text-5xl lg:text-6xl dark:text-white;
+}
+
+.only-tailwind p {
+  @apply mb-6 text-lg font-normal text-gray-500 lg:text-xl dark:text-gray-400;
+}
+
+.only-tailwind a {
+  @apply text-blue-600 dark:text-blue-500 hover:underline font-medium text-lg inline-flex items-center;
+}
+
+.only-tailwind svg {
+  @apply w-3.5 h-3.5 ms-2 rtl:rotate-180;
+}
+
+.only-tailwind .card {
+  @apply w-full lg:max-w-xl p-6 space-y-8 sm:p-8 bg-white rounded-lg shadow-xl dark:bg-gray-800;
+}
+
+.only-tailwind h2 {
+  @apply text-2xl font-bold text-gray-900 dark:text-white;
+}
+
+.only-tailwind form {
+  @apply mt-8 space-y-6;
+}
+
+.only-tailwind label {
+  @apply block mb-2 text-sm font-medium text-gray-900 dark:text-white;
+}
+
+.only-tailwind input {
+  @apply bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500
+  focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600
+  dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500;
+}
+
+.only-tailwind .checkbox-container {
+  @apply flex items-start;
+}
+
+.only-tailwind .checkbox-input {
+  @apply w-4 h-4 border-gray-300 rounded-sm bg-gray-50 focus:ring-3 focus:ring-blue-300
+  dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:bg-gray-700 dark:border-gray-600;
+}
+
+.only-tailwind button {
+  @apply w-full px-8 py-3 text-base font-medium text-center text-white bg-blue-700 rounded-lg
+  hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 sm:w-auto dark:bg-blue-600
+  dark:hover:bg-blue-700 dark:focus:ring-blue-800;
+}
+
+.only-tailwind .register-text {
+  @apply text-sm font-medium text-gray-900 dark:text-white;
+}
+
+.only-tailwind .register-link {
+  @apply text-blue-600 dark:text-white font-medium
+  px-2 py-2 rounded-lg
+  hover:bg-blue-100 dark:hover:bg-blue-900 transition-all;
+}
+
+
+/*.login-form{*/
+/*    padding: 2rem;*/
+/*    border-radius: 5px;*/
+/*    gap: 5rem;*/
+/*    margin-top: 1rem;*/
+/*    margin-bottom: 5rem;*/
+/*    margin-left: 5rem;*/
+/*    display: flex;*/
+/*    width: 20rem;*/
+/*    height: 20rem;*/
+/*}*/
+
+/*.login-container{*/
+/*  background-color: #ffffff;*/
+/*  width: 100%;*/
+/*  height: 100%;*/
+/*  margin:0;*/
+/*  padding:0;*/
+/*}*/
+
+/*.login-half-box{*/
+/*    display: flex;*/
+/*    flex-direction: column;*/
+/*    justify-content: center;*/
+/*    align-items: center;*/
+/*    width: 50%;*/
+/*    height: 50%;*/
+/*}*/
+
+/*.login-half-box > form{*/
+/*    display: flex;*/
+/*    flex-direction: column;*/
+/*    justify-content: start;*/
+/*    align-items: start;*/
+/*    width: 100%;*/
+/*    height: 100%;*/
+/*}*/
+
+/*.login-half-box-left{*/
+/*}*/
+
+/*.login-half-box-right{*/
+/*  width: 100%;*/
+/*  height: 100%;*/
+/*  background-color: #0e336c;*/
+/*}*/
+
+
+
+/*.login-text{*/
+/*    display: flex;*/
+/*    justify-content: left;*/
+/*    align-items: center;*/
+/*    font-size: 1.5rem;*/
+/*    font-weight: 600;*/
+/*    text-align: center;*/
+/*    color: #0e336c;*/
+/*    margin-top: 1rem;*/
+/*}*/
+
+/*.login-input{*/
+/*    padding: 0.6rem 1rem;*/
+/*    border-width: 2px;*/
+/*    border-radius: 30px;*/
+/*    margin: 0.5rem;*/
+/*    width: 20rem;*/
+/*}*/
+
+/*.login-button{*/
+/*  display: flex;*/
+/*  flex-direction: column;*/
+/*  justify-content: center;*/
+/*  align-items: center;*/
+/*  background-color: #00bdff;*/
+/*  padding: 0.6rem 1rem;*/
+/*  border: none;*/
+/*  border-radius: 30px;*/
+/*  margin: 0.5rem;*/
+/*  height: 4rem;*/
+/*  width: 20rem;*/
+/*}*/
+
+/*.sign-up-text{*/
+/*  color: #0e336c;*/
+/*  padding: 0.6rem 1rem;*/
+/*  border: none;*/
+/*  width: 20rem;*/
+/*}*/
+
+/*.sign-up-button{*/
+/*  color: white;*/
+/*  border: none;*/
+/*  border-radius: 30px;*/
+/*  padding: 0.6rem 1rem;*/
+/*  border-radius: 30px;*/
+/*  margin: 0.5rem;*/
+/*  height: 4rem;*/
+/*  width: 20rem;*/
+/*}*/
+
+/*.bayesian-title{*/
+/*  font-size: 2rem;*/
+/*  font-weight: 600;*/
+/*  text-align: center;*/
+/*  color: #fff;*/
+/*  display: flex;*/
+/*  justify-content: center;*/
+/*  align-items: center;*/
+/*}*/
+
+/*.sign-up-container{*/
+/*  display: flex;*/
+/*  flex-direction: column;*/
+/*  justify-content: center;*/
+/*  align-items: flex-start;*/
+/*  margin-left: 9rem;*/
+/*  width: 100%;*/
+/*  height: 100%;*/
+/*}*/

@@ -1,0 +1,26 @@
+
+
+<form class="h-full w-full bg-white p-6 rounded-lg shadow-lg" [formGroup]="uploadNetworkForm" (ngSubmit)="onSubmit()">
+
+    <div class="h-4/5">
+        <h2>Upload network</h2>
+        <br>
+        <div class="p-2">
+            <input type="text" id="name" name="name" formControlName="name"
+            class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+            <div *ngIf="uploadNetworkForm.get('name')!.invalid && uploadNetworkForm.get('name')!.touched" class="text-red-500 text-sm">Required field</div>
+        </div>
+
+        <div class="p-2">
+            <input type="file" id="file" name="file" formControlName="file" #filePicker (change)="onFilePicked($event)"
+  class="w-full text-gray-500 font-medium text-base bg-gray-100 file:cursor-pointer cursor-pointer file:border-0 file:py-2.5 file:px-4 file:mr-4 file:bg-gray-800 file:hover:bg-gray-700 file:text-white rounded" />
+        </div>
+
+
+    </div>
+
+    <mat-dialog-actions class="space-x-2">
+        <button (click)="cancel()" class="bg-blue-500 hover:bg-blue-600 text-white font-medium py-2 px-4 rounded-md transition-colors duration-150">Cancel</button>
+        <button type="submit" class="bg-blue-500 hover:bg-blue-600 text-white font-medium py-2 px-4 rounded-md transition-colors duration-150">Upload</button>
+    </mat-dialog-actions>
+</form>

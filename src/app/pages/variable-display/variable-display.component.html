@@ -1,0 +1,6 @@
+<div>
+  <div *ngFor="let variable of variables">
+    <p>{{ variable.variable_name }}</p>
+    <app-probability-bar [probability]="variable.true_probability*100"></app-probability-bar>
+  </div>
+</div>

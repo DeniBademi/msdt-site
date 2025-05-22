@@ -1,0 +1,26 @@
+.wrapper {
+    overflow: hidden;
+    height: 100%;
+    width: 100%;
+    padding: 40px;
+    margin: 50px;
+    margin: auto;
+    float: right;
+    background-color: #f2f2f2ff;
+}
+.cancel-btn,
+.confirm-btn {
+    font-size: 18px;
+    padding: 10px 20px;
+    margin: 10px;
+    border-radius: 8px;
+    background-color: #000045;
+    color: white;
+}
+.confirm-btn {
+    background-color: #00C6A0;
+}
+.cancel-btn:hover,
+.confirm-btn:hover {
+    background-color: #506a83;
+}

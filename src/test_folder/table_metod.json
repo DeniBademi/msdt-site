@@ -1,0 +1,343 @@
+{
+  "prediction": {
+    "variable_name": "Lymph node metastasis",
+    "predicted_value": "yes",
+    "probability": 0.08543881568835607
+  },
+  "supporting_factors": [
+    {
+      "feature": "CA125",
+      "value": "ge_35",
+      "importance": "Very important"
+    },
+    {
+      "feature": "L1CAM",
+      "value": "positive",
+      "importance": "Neutral"
+    }
+  ],
+  "opposing_factors": [
+    {
+      "feature": "None",
+      "value": "None"
+    }
+  ],
+  "immediate_causes": [
+    {
+      "feature": "Recurrence",
+      "increase_percent": 28.7,
+      "state": "regional_distant"
+    },
+    {
+      "feature": "Platelets",
+      "increase_percent": 1.7,
+      "state": "ge_400"
+    },
+    {
+      "feature": "Adjuvant therapy",
+      "increase_percent": 24.3,
+      "state": "chemotx"
+    },
+    {
+      "feature": "LVSI",
+      "increase_percent": 36.0,
+      "state": "yes"
+    },
+    {
+      "feature": "Estrogen receptor",
+      "increase_percent": 27.3,
+      "state": "negative"
+    },
+    {
+      "feature": "Postoperative grade",
+      "increase_percent": 50.1,
+      "state": "grade_3"
+    },
+    {
+      "feature": "Progesteron receptor",
+      "increase_percent": 40.0,
+      "state": "negative"
+    },
+    {
+      "feature": "Enlarged nodes CT",
+      "increase_percent": 17.2,
+      "state": "yes"
+    },
+    {
+      "feature": "p53",
+      "increase_percent": 49.2,
+      "state": "mutant"
+    },
+    {
+      "feature": "Myometrial invasion",
+      "increase_percent": 17.0,
+      "state": "ge_50"
+    }
+  ],
+  "level3_explanations": [
+    {
+      "query": "Lymph node metastasis",
+      "supporting": [
+        {
+          "feature": "CA125",
+          "value": "ge_35 (Very important)"
+        },
+        {
+          "feature": "L1CAM",
+          "value": "positive"
+        }
+      ],
+      "opposing": [
+        {
+          "feature": "None",
+          "value": "None"
+        }
+      ],
+      "partially_supporting": [
+        {
+          "feature": "None",
+          "value": "None"
+        }
+      ]
+    },
+    {
+      "query": "Recurrence",
+      "supporting": [
+        {
+          "feature": "CA125",
+          "value": "ge_35"
+        }
+      ],
+      "opposing": [
+        {
+          "feature": "None",
+          "value": "None"
+        }
+      ],
+      "partially_supporting": [
+        {
+          "feature": "L1CAM",
+          "value": "positive"
+        }
+      ]
+    },
+    {
+      "query": "Platelets",
+      "supporting": [
+        {
+          "feature": "CA125",
+          "value": "ge_35"
+        },
+        {
+          "feature": "L1CAM",
+          "value": "positive"
+        }
+      ],
+      "opposing": [
+        {
+          "feature": "None",
+          "value": "None"
+        }
+      ],
+      "partially_supporting": [
+        {
+          "feature": "None",
+          "value": "None"
+        }
+      ]
+    },
+    {
+      "query": "Adjuvant therapy",
+      "supporting": [
+        {
+          "feature": "CA125",
+          "value": "ge_35"
+        },
+        {
+          "feature": "L1CAM",
+          "value": "positive"
+        }
+      ],
+      "opposing": [
+        {
+          "feature": "None",
+          "value": "None"
+        }
+      ],
+      "partially_supporting": [
+        {
+          "feature": "None",
+          "value": "None"
+        }
+      ]
+    },
+    {
+      "query": "LVSI",
+      "supporting": [
+        {
+          "feature": "L1CAM",
+          "value": "positive"
+        },
+        {
+          "feature": "CA125",
+          "value": "ge_35"
+        }
+      ],
+      "opposing": [
+        {
+          "feature": "None",
+          "value": "None"
+        }
+      ],
+      "partially_supporting": [
+        {
+          "feature": "None",
+          "value": "None"
+        }
+      ]
+    },
+    {
+      "query": "Estrogen receptor",
+      "supporting": [
+        {
+          "feature": "L1CAM",
+          "value": "positive"
+        },
+        {
+          "feature": "CA125",
+          "value": "ge_35"
+        }
+      ],
+      "opposing": [
+        {
+          "feature": "None",
+          "value": "None"
+        }
+      ],
+      "partially_supporting": [
+        {
+          "feature": "None",
+          "value": "None"
+        }
+      ]
+    },
+    {
+      "query": "Postoperative grade",
+      "supporting": [
+        {
+          "feature": "L1CAM",
+          "value": "positive"
+        },
+        {
+          "feature": "CA125",
+          "value": "ge_35"
+        }
+      ],
+      "opposing": [
+        {
+          "feature": "None",
+          "value": "None"
+        }
+      ],
+      "partially_supporting": [
+        {
+          "feature": "None",
+          "value": "None"
+        }
+      ]
+    },
+    {
+      "query": "Progesteron receptor",
+      "supporting": [
+        {
+          "feature": "L1CAM",
+          "value": "positive"
+        }
+      ],
+      "opposing": [
+        {
+          "feature": "CA125",
+          "value": "ge_35"
+        }
+      ],
+      "partially_supporting": [
+        {
+          "feature": "None",
+          "value": "None"
+        }
+      ]
+    },
+    {
+      "query": "Enlarged nodes CT",
+      "supporting": [
+        {
+          "feature": "CA125",
+          "value": "ge_35"
+        },
+        {
+          "feature": "L1CAM",
+          "value": "positive"
+        }
+      ],
+      "opposing": [
+        {
+          "feature": "None",
+          "value": "None"
+        }
+      ],
+      "partially_supporting": [
+        {
+          "feature": "None",
+          "value": "None"
+        }
+      ]
+    },
+    {
+      "query": "p53",
+      "supporting": [
+        {
+          "feature": "L1CAM",
+          "value": "positive"
+        },
+        {
+          "feature": "CA125",
+          "value": "ge_35"
+        }
+      ],
+      "opposing": [
+        {
+          "feature": "None",
+          "value": "None"
+        }
+      ],
+      "partially_supporting": [
+        {
+          "feature": "None",
+          "value": "None"
+        }
+      ]
+    },
+    {
+      "query": "Myometrial invasion",
+      "supporting": [
+        {
+          "feature": "CA125",
+          "value": "ge_35"
+        }
+      ],
+      "opposing": [
+        {
+          "feature": "None",
+          "value": "None"
+        }
+      ],
+      "partially_supporting": [
+        {
+          "feature": "L1CAM",
+          "value": "positive"
+        }
+      ]
+    }
+  ],
+  "explanation_level": "Level 3"
+}

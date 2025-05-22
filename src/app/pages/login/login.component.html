@@ -1,0 +1,89 @@
+<main class="isolate">
+  <section class="only-tailwind">
+    <div class="container">
+      <div class="content">
+        <h1>Bayesian Inference for Bayesian Networks</h1>
+        <p>Using the latest and most advanced technology we will help you find answers in your data.</p>
+        <a href="https://en.wikipedia.org/wiki/Bayesian_network" target="_blank">
+          Read more about Bayesian Networks
+          <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
+            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9"/>
+          </svg>
+        </a>
+      </div>
+      <div>
+        <div class="card">
+          <h2>Sign in to your account</h2>
+          <form [formGroup]="loginForm" (ngSubmit)="handleLogin()">
+            <div>
+              <label for="usernameInput">Your username</label>
+              <input            formControlName="username"
+                                class="login-input"
+                                id="usernameInput"
+                                placeholder="Username"
+                                type="text" required />
+            </div>
+            <div>
+              <label for="passwordInput">Your password</label>
+              <input             formControlName="password"
+                                 class="login-input"
+                                 id="passwordInput"
+                                 maxlength="24"
+                                 placeholder="••••••••"
+                                 type="password" required />
+            </div>
+            <div class="checkbox-container">
+              <div class="flex items-center h-5">
+                <input id="remember" aria-describedby="remember" name="remember" type="checkbox" class="checkbox-input" required />
+              </div>
+              <div class="ms-3 text-sm">
+                <label for="remember">Remember this device</label>
+              </div>
+<!--              <a href="#" class="forgot-password-link">Lost Password?</a>-->
+            </div>
+            <button type="submit">Login</button>
+            <div class="register-text">
+              Not registered yet?
+              <button (click)="handleSignUp()" class="ms-3 register-link">Register</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+<!--=========== OLD PAGE ===========-->
+<!--  <div class="row login-container">-->
+<!--    <div class="column login-half-box login-half-box-left">-->
+<!--      <form [formGroup]="loginForm" (ngSubmit)="handleLogin()" class="login-form column">-->
+<!--        <h2 class="login-text"> Welcome to Bayesian Inference made simple! </h2>-->
+<!--        <label for="usernameInput">-->
+<!--          <input-->
+<!--            formControlName="username"-->
+<!--            class="login-input"-->
+<!--            id="usernameInput"-->
+<!--            placeholder="Username"-->
+<!--            type="email"-->
+<!--          />-->
+<!--        </label>-->
+
+<!--        <label for="passwordInput">-->
+<!--          <input-->
+<!--            formControlName="password"-->
+<!--            class="login-input"-->
+<!--            id="passwordInput"-->
+<!--            maxlength="24"-->
+<!--            placeholder="Password"-->
+<!--            type="password"-->
+<!--          />-->
+<!--        </label>-->
+<!--        <button class="login-button"> Login </button>-->
+<!--      </form>-->
+<!--      <div class="sign-up-container column">-->
+<!--        <h3 class="sign-up-text"> Don't have an account yet? </h3>-->
+<!--        <button (click)="handleSignUp()" class="sign-up-button"> Sign Up </button>-->
+<!--      </div>-->
+<!--    </div>-->
+<!--    <h2 class="bayesian-title login-half-box login-half-box-right"> Embrace the power of Bayesian Networks! </h2>-->
+<!--  </div>-->
+<!--=========== OLD PAGE END===========-->

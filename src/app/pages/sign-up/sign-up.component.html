@@ -1,0 +1,66 @@
+<main class="isolate flex items-center justify-center min-h-screen bg-gray-100 dark:bg-gray-900">
+  <section class="w-full max-w-md p-8">
+    <div class="card">
+      <h2>Create Account</h2>
+      <form [formGroup]="signUpForm" (ngSubmit)="onSubmit()" class="space-y-6">
+        <div>
+          <label for="usernameInput" class="signup-label">Username</label>
+          <input
+            formControlName="username"
+            id="usernameInput"
+            type="text"
+            placeholder="Username"
+            required/>
+        </div>
+        <div>
+          <label for="password" class="signup-label">Password</label>
+          <input
+            formControlName="password"
+            id="password"
+            type="password"
+            placeholder="Password"
+            required
+          />
+        </div>
+        <div>
+          <label for="passwordRepeat" class="signup-label">Confirm Password</label>
+          <input
+            formControlName="passwordRepeat"
+            id="passwordRepeat"
+            type="password"
+            placeholder="Confirm Password"
+            required
+          />
+        </div>
+        <div class="checkbox-container">
+          <div class="flex items-center w-5 h-5">
+            <input
+              id="terms" name="terms" type="checkbox" required class="checkbox-input"
+            />
+          </div>
+          <div class="ms-3 text-sm">
+            <label for="terms" class="checkbox-label">
+              I agree to the terms and conditions
+            </label>
+          </div>
+        </div>
+        <button
+          type="submit"
+          class="w-full px-8 py-3 text-base font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+        >
+          Register
+        </button>
+      </form>
+    </div>
+    <div class="mt-20 text-center">
+      <span class="text-sm text-gray-900 dark:text-white">Already have an account?</span>
+      <button
+        type="button"
+        class="ml-1 text-sm font-medium text-blue-600 hover:underline dark:text-blue-500"
+        (click)="handleSignIn()"
+      >
+        Sign In
+      </button>
+    </div>
+  </section>
+</main>

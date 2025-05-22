@@ -1,0 +1,10 @@
+<div style="font-size: 1.2rem;">{{ variable }}: {{ predictedValue }}</div>
+<div class="w-full bg-gray-200 rounded-lg overflow-hidden">
+    <div
+      class="h-6 transition-all duration-500 text-white text-center font-bold"
+      [ngClass]="getProgressColor()"
+      [style.width.%]="probability"
+    >
+      {{ probability }}%
+    </div>
+  </div>

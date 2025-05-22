@@ -1,0 +1,59 @@
+@import 'tailwindcss';
+
+.only-tailwind {
+  background-image: linear-gradient(to bottom, #1d5fae, transparent) !important;
+  @apply bg-gradient-to-b from-blue-400 to-transparent dark:from-blue-900 w-full h-full absolute top-0 left-0 z-0;
+}
+
+.card {
+  @apply p-6 space-y-8 bg-white rounded-lg shadow-xl dark:bg-gray-800;
+}
+
+.card h2 {
+  @apply text-2xl font-bold text-center text-gray-900 dark:text-white mb-6;
+}
+
+.card input {
+  @apply bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500
+  focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600
+  dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500;
+}
+
+.signup-label {
+  @apply block mb-2 text-sm font-medium dark:text-white;
+}
+
+.checkbox-input {
+  @apply w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500
+  focus:ring-2 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-blue-500;
+}
+
+.checkbox-container{
+  @apply flex items-center;
+}
+
+.checkbox-label {
+  @apply ml-2 text-sm font-medium dark:text-gray-300;
+}
+
+
+
+/*.sign-up-page-container{*/
+/*    display: flex;*/
+/*    flex-direction: column;*/
+/*    justify-content: center;*/
+/*    align-items: center;*/
+/*    height: 20vh;*/
+/*    width: 50vh;*/
+/*    padding: 5vh;*/
+/*    margin: 5rem;*/
+/*    font-size: 1.5rem;*/
+/*}*/
+/*body{*/
+/*    color: var(--color-primaryText);*/
+/*}*/
+
+/**{*/
+/*    margin: 0;*/
+/*    padding: 0;*/
+/*}*/

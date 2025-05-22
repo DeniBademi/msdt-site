@@ -1,0 +1,13 @@
+#faq {
+    padding: 20px;
+    background-color: #f4f4f4;
+  }
+  .faq-item {
+    margin-bottom: 15px;
+  }
+  .question {
+    font-weight: bold;
+  }
+  .answer {
+    display: none; /* Hidden by default, toggle on click */
+  }

@@ -1,0 +1,33 @@
+<div class="bg-white shadow-lg rounded-lg p-6 h-full flex flex-col">
+  <h2 class="text-xl font-bold mb-4">Available Networks</h2>
+
+  <div *ngIf="loading" class="flex justify-center items-center py-4">
+    <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-500"></div>
+  </div>
+
+  <div *ngIf="error" class="text-red-500 p-4 bg-red-100 rounded-lg mb-4">
+    {{ error }}
+  </div>
+
+  <div *ngIf="!loading && !error && networks.length === 0" class="text-gray-500 p-4 text-center  flex-grow overflow-y-auto">
+    No networks available. Please upload a network first.
+  </div>
+
+  <ul *ngIf="!loading && !error && networks.length > 0" class="divide-y divide-gray-200 flex-grow overflow-y-auto">
+    <li *ngFor="let network of networks"
+        class="py-3 px-4 hover:bg-gray-50 cursor-pointer transition-colors duration-150"
+        (click)="selectNetwork(network)">
+      <div class="flex justify-between items-center">
+        <span class="font-medium text-gray-800">{{ network.name }}</span>
+        <span class="text-sm text-gray-500">ID: {{ network.id }}</span>
+      </div>
+    </li>
+  </ul>
+
+  <div class="mt-4 flex justify-end pt-4 border-t border-gray-200">
+    <button (click)="loadNetworks()"
+            class="bg-blue-500 hover:bg-blue-600 text-white font-medium py-2 px-4 rounded-md transition-colors duration-150">
+      Refresh
+    </button>
+  </div>
+</div>

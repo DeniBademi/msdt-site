@@ -1,0 +1,18 @@
+{
+  "evidence_list": [
+    { "variable": "some_evidence1", "value": "True" },
+    {"variable": "some_evidence2", "value": "False" },
+    {"variable": "some_evidence3", "value": "True" }
+  ],
+
+
+  "query": "some_query",
+  "query_result": {"boolean":  "True", "value":  0.9},
+  "non_conflicting_evidence": [{"variable":  "some_evidence1", "value":  "True", "importance":  "significant"},
+    {"variable":  "some_evidence2", "value":  "False", "importance":  "non_significant"}],
+  "conflicting_evidence": [{"variable":  "some_evidence3", "value":  "True", "importance":  "significant"}],
+
+  "intermediate_nodes": [{"variable":  "intermediate1", "boolean":  "True", "value": 0.7, "percentage":  "10", "supported_evidence": [{"variable":  "some_evidence1", "value":  "True"}, {"variable":  "some_evidence2", "value":  "False"}]},
+    {"variable":  "intermediate2", "boolean":  "False","value": 0.6, "percentage":  "80","supported_evidence": [{"variable":  "some_evidence1", "value":  "True"}, {"variable":  "some_evidence2", "value":  "False"}]}
+  ]
+}

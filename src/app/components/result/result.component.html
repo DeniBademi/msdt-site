@@ -1,0 +1,10 @@
+<div *ngIf="probability && variable && predictedValue">
+  <app-probability-bar
+  [probability]="probability"
+  [variable]="variable"
+  [predictedValue]="predictedValue"
+></app-probability-bar>
+</div>
+<div *ngIf="!probability || !variable || !predictedValue" class="text-gray-500 p-4 text-center">
+  No prediction results found. Please submit a prediction first.
+</div>

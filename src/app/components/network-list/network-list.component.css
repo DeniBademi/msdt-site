@@ -1,0 +1,9 @@
+/* Add any additional custom styles here */
+.network-item {
+  transition: all 0.2s ease;
+}
+
+.network-item:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
