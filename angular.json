@@ -22,7 +22,7 @@
             "tsConfig": "tsconfig.app.json",
             "assets": [
               {
-                "glob": "**/*",
+                "glob": "staticwebapp.config.json",
                 "input": "public"
               }
             ],
