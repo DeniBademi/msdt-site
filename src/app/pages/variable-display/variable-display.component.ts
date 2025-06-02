@@ -11,6 +11,7 @@ import { ProbabilityBarComponent } from '../../components/probability-bar/probab
     ProbabilityBarComponent
   ],
   templateUrl: './variable-display.component.html',
+  standalone: true,
   styleUrl: './variable-display.component.css'
 })
 export class VariableDisplayComponent {

@@ -22,7 +22,7 @@
             "tsConfig": "tsconfig.app.json",
             "assets": [
               {
-                "glob": "staticwebapp.config.json",
+                "glob": "**/*",
                 "input": "public"
               }
             ],
@@ -39,12 +39,12 @@
                 {
                   "type": "initial",
                   "maximumWarning": "500kB",
-                  "maximumError": "10MB"
+                  "maximumError": "1MB"
                 },
                 {
                   "type": "anyComponentStyle",
                   "maximumWarning": "4kB",
-                  "maximumError": "10MB"
+                  "maximumError": "8kB"
                 }
               ],
               "outputHashing": "all"

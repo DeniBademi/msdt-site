@@ -18,15 +18,15 @@ export class LocalStorageService {
   }
 
   public getToken() : Token {
-    let token = JSON.parse(localStorage.getItem('user')!)['token'];
-
-    return token;
+    const user = localStorage.getItem('user');
+    return user ? JSON.parse(user)['token'] : '';
   }
 
-  public getUser(): User {
-    let user = JSON.parse(localStorage.getItem('user')!);
+  public getUser(): User | null {
+    const userStr = localStorage.getItem('user');
+    if (!userStr) return null;
 
-    // parse the user object from local storage
-    return new User(user['username'], user['role'], user['token']);
+    const user = JSON.parse(userStr);
+    return new User(user.username, user.role, user.token);
   }
 }

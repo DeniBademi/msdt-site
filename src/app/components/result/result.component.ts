@@ -7,6 +7,7 @@ import { ToastrService } from 'ngx-toastr';
   selector: 'app-result',
   templateUrl: './result.component.html',
   styleUrls: ['./result.component.css'],
+  standalone: true,
   imports: [ProbabilityBarComponent, CommonModule]
 })
 export class ResultComponent implements OnInit {

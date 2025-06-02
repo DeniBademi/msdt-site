@@ -7,7 +7,7 @@ import { firstValueFrom } from 'rxjs';
 import { PredictionService } from './prediction.service';
 import { TableMethodJsonModel } from '../_models/TableMethodJson.model';
 import { Observable } from 'rxjs';
-
+import { LocalStorageService } from './local-storage.service';
 @Injectable({
   providedIn: 'root'
 })
@@ -15,7 +15,8 @@ export class BackendService {
 
   constructor(
     private http: HttpClient,
-    private predictionService: PredictionService
+    private predictionService: PredictionService,
+    private localStorage: LocalStorageService
   ) { }
 
   backendURL = 'http://127.0.0.1:8000/api';
@@ -27,6 +28,8 @@ export class BackendService {
       .subscribe({
         next: (user: User) => {
           resolve(user);
+          this.localStorage.setUser(user);
+          console.log(this.localStorage.getUser());
         },
         error: (err) => {
           reject(err);
@@ -104,17 +107,20 @@ export class BackendService {
     window.open(this.backendURL + '/download_answers_csv/?' + params.toString(), '_blank');
   }
 
-  public submitAnswers(userId: number, answers: { question_id: number, answer_text: string }[]) {
+  public submitAnswers(answers: { question_id: number, answer_text: string }[]) {
     return firstValueFrom(
       this.http.post<any>(this.backendURL + '/submit_answers/', {
-        user_id: userId,
         answers: answers
       })
     );
   }
 
   public predict(evidence: any): Observable<TableMethodJsonModel>{
-    return this.http.post<TableMethodJsonModel>('http://127.0.0.1:8000/api/predict', evidence);
+    return this.http.post<TableMethodJsonModel>('http://127.0.0.1:8000/api/predict/', evidence);
+  }
+
+  public predict_MPE(evidence: any): Observable<any>{
+    return this.http.post<any>('http://127.0.0.1:8000/api/predict_MPE/', evidence);
   }
 
 }

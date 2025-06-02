@@ -31,7 +31,7 @@ export class UploadNetworkFormComponent {
   }
 
   onSubmit() {
-    // console.log(this.uploadNetworkForm.value);
+    console.log(this.uploadNetworkForm.value);
 
     if (this.uploadNetworkForm.valid) {
       const formData = new FormData();

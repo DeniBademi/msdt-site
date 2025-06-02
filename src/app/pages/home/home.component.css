@@ -3,6 +3,25 @@ body {
     padding: 0;
   }
 
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+th, td {
+  padding: 8px 12px;
+  border: 1px solid #ccc;
+}
+
+tr:nth-child(even) {
+  background-color: #f2f2f2;  /* Light gray */
+}
+
+tr:nth-child(odd) {
+  background-color: #ffffff;  /* White */
+}
+
   nav {
     margin-bottom: 0; /* Adjust as needed */
   }

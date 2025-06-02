@@ -4,31 +4,28 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { BehaviorSubject, Subscription } from 'rxjs';
 import { BackendService } from '../../_services/backend.service';
 
-interface VariableMetadata {
-  states: string[];
-}
 
 interface NetworkMetadata {
-  network_id: string;
+  id: string;
+  name: string;
   metadata: {
-    [key: string]: VariableMetadata;
+    [key: string]: {
+      states: string[];
+    };
   };
-}
-
-interface EvidenceItem {
-  variable: string;
-  value: string;
 }
 
 interface EvidenceSubmission {
   query: string;
-  evidence_list: EvidenceItem[];
+  evidence: { [key: string]: string };
+  network: string;
 }
 
 @Component({
   selector: 'app-add-evidence',
   imports: [CommonModule, ReactiveFormsModule],
   templateUrl: './add-evidence.component.html',
+  standalone: true,
   styleUrl: './add-evidence.component.css'
 })
 export class AddEvidenceComponent implements OnInit, OnDestroy {
@@ -97,44 +94,32 @@ export class AddEvidenceComponent implements OnInit, OnDestroy {
     if (this.evidenceForm.valid && this.selectedQuery) {
       this.isLoading = true;
       this.disableAllVariables();
-      const evidence_list: EvidenceItem[] = [];
+      const evidence_dict: { [key: string]: string } = {};
 
       Object.entries(this.evidenceForm.value).forEach(([variable, value]) => {
         if (value && variable !== this.selectedQuery) {
-          evidence_list.push({
-            variable,
-            value: value as string
-          });
+          evidence_dict[variable] = value as string;
         }
       });
 
       const submission: EvidenceSubmission = {
         query: this.selectedQuery,
-        evidence_list
+        evidence: evidence_dict,
+        network: this.currentMetadata!.id
       };
 
       try {
-
-        let dummy_submission =  {
-              "query": "LNM",
-              "evidence_list": [
-                  {
-                      "variable": "CA125",
-                      "value": "1"
-                  },
-                  {
-                      "variable": "PrimaryTumor",
-                      "value": "2"
-                  },
-                  {
-                      "variable": "L1CAM",
-                      "value": "1"
-                  }
-              ]
+        let dummy_submission = {
+          "query": "LNM",
+          "evidence_dict": {
+            "CA125": "1",
+            "PrimaryTumor": "2",
+            "L1CAM": "1"
           }
+        }
 
-        await this.backendService.predict(dummy_submission);
-        this.submitEvidence.emit(dummy_submission);
+        await this.backendService.predict(submission);
+        this.submitEvidence.emit(submission);
       } catch (error) {
         console.error('Error submitting prediction:', error);
         // You might want to show an error message to the user here

@@ -22,7 +22,8 @@ export class SignUpComponent {
   signUpForm = new FormGroup({
     username: new FormControl('', [Validators.required]),
     password: new FormControl('' , [Validators.required]),
-    passwordRepeat: new FormControl('', [Validators.required])
+    passwordRepeat: new FormControl('', [Validators.required]),
+    isAdmin: new FormControl(false)
   });
 
   constructor(private router: Router, private backend: BackendService, private storage: LocalStorageService) { }
@@ -37,7 +38,13 @@ export class SignUpComponent {
       return;
     }
 
+    const isAdmin = this.signUpForm.value.isAdmin;
     let creds = new SignUpCredentials(this.signUpForm.value.username!, this.signUpForm.value.password!);
+
+    if (isAdmin) {
+      creds.role = "admin";
+      creds.admin_code = "password_is_password";
+    }
 
     this.backend.signUp(creds).then(response => {
       this.storage.setUser(response);

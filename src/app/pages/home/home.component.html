@@ -31,13 +31,13 @@
 					<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 5v0m0 7v0m0 7v0m0-13a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z" />
 				</svg>
 			</li>
-			<li><a class="text-sm text-gray-400 hover:text-gray-500 cursor-pointer" (click)="openQuestionareAnswersPage()">Saved Feedback</a></li>
-			<li class="text-gray-300">
-				<svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" class="w-4 h-4 current-fill" viewBox="0 0 24 24">
-					<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 5v0m0 7v0m0 7v0m0-13a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z" />
-				</svg>
-			</li>
-			<li><a class="text-sm text-gray-400 hover:text-gray-500" href="#">e</a></li>
+      <li><a class="text-sm text-gray-400 hover:text-gray-500">e</a></li>  <!--I'm not sure what this is for, but it was in the original code-->
+      <li *ngIf="isAdmin()" class="text-gray-300">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" class="w-4 h-4 current-fill" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 5v0m0 7v0m0 7v0m0-13a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z" />
+        </svg>
+      </li>
+      <li *ngIf="isAdmin()"><a class="text-sm text-gray-400 hover:text-gray-500 cursor-pointer" (click)="openQuestionareAnswersPage()">Saved Feedback</a></li>
 		</ul>
 	</nav>
 	<div class="navbar-menu relative z-50 hidden">
@@ -154,7 +154,10 @@
 
             <!-- given a selected method, this code will make sure that the correct explanation is shown -->
             @if(selectedOptions['Explanation'] == 'Table method'){
-              <p style="text-align: center;" class="mt-2 text-gray-600">Table method</p>
+              <p style="font-size: 16px; text-align: center;" class="mt-2 text-gray-600">The Table method is an explanation approach structured in three levels,
+                each providing a progressively deeper level of detail. You can find more information on the Table method in
+                <a href="https://www.sciencedirect.com/science/article/abs/pii/S0933365719307560" style="color: blue; text-decoration: underline;">this</a>
+                paper by Kyrimi and Marsh.</p>
 
               <button (click)="levelOneVisible = !levelOneVisible">
                 {{ levelOneVisible ? 'Hide level 1' : 'Show level 1' }}
@@ -253,85 +256,22 @@
               }
             }
 
-            @if(selectedOptions['Explanation'] == 'Language method'){
-              <p style="text-align: center;" class="mt-2 text-gray-600">Language method</p>
-
-              <button (click)="levelOneVisible = !levelOneVisible">
-                {{ levelOneVisible ? 'Hide level 1' : 'Show level 1' }}
-              </button>
-              @if(levelOneVisible){
-                <div [class.visible]="levelOneVisible" class="box">
-                  <b>The likelihood of '{{query1}}' = {{query_result1.boolean}} is {{query_result1.value}} <br>
-                  This patient has a {{query_result1.increase}} % INCREASED in risk of '{{query1}}' than an average case.</b> <br><br>
-
-                  <b>Factors that support '{{query1}}' =
-                    {{query_result1.boolean}} (strongest to least):</b><br>
-                  <li *ngFor="let item of non_conflicting_evidence1">
-                     {{ item.variable }} = {{ item.value }} ({{ item.importance }})
-                  </li>
-                  <br>
-                  <b>Factors that do not support '{{query1}}' = {{query_result1.boolean}}
-                  (strongest to least): </b><br>
-                  <li *ngFor="let item of conflicting_evidence1">
-                    {{ item.variable }} = {{ item.value }} ({{ item.importance }})
-                  </li>
-                </div>
-              }
-
-              <button (click)="levelTwoVisible = !levelTwoVisible">
-                {{ levelTwoVisible ? 'Hide level 2' : 'Show level 2' }}
-              </button>
-
-              @if(levelTwoVisible){
-                <div [class.visible]="levelTwoVisible" class="box">
-                  <b>Important elements for predicting '{{query1}}' are:</b><br>
-                  <div *ngFor="let item of intermediate_nodes1; let i = index">
-                    ({{ i + 1 }}) {{ item.variable }} = : The likelihood of '{{ item.variable }}' = {{item.boolean}} is {{item.value}}
-                    This patient has a {{item.percentage}} % INCREASE in risk of having '{{ item.variable }}' = {{item.boolean}}
-                    than the average case.
-                  </div>
-                </div>
-              }
-
-              <button (click)="levelThreeVisible = !levelThreeVisible">
-                {{ levelThreeVisible ? 'Hide level 3' : 'Show level 3' }}
-              </button>
-              @if(levelThreeVisible){
-                <div [class.visible]="levelThreeVisible" class="box">
-                  <div *ngFor="let item of intermediate_nodes1">
-                    <b>Factors that support  '{{ item.variable }}' = {{item.boolean}}:</b><br>
-                    <br>
-                    <div *ngFor="let ev of item.supported_evidence">
-                      {{ev.variable}} =  {{ev.value}}
-                    </div>
-                    <br>
-
-                    <b>Factors that partially support '{{ item.variable }}' = {{item.boolean}}:</b><br>
-                    <br>
-                    <div *ngFor="let ev of item.partially_supported_evidence">
-                      {{ev.variable}} =  {{ev.value}}
-                    </div>
-                    <br>
-                    <b>Factors that do not support '{{ item.variable }}' = {{item.boolean}}</b><br>
-                    <br>
-                    <div *ngFor="let ev of item.non_supported_evidence">
-                      {{ev.variable}} =  {{ev.value}}
-                    </div>
-                    <br>
-                    <b>Factors that partially do not support '{{ item.variable }}' = {{item.boolean}}:</b><br>
-                    <br>
-                    <div *ngFor="let ev of item.partially_non_supported_evidence">
-                      {{ev.variable}} =  {{ev.value}}
-                    </div>
-                  </div>
-
-                </div>
-              }
-
-            }
-
-            @if(selectedOptions['Explanation'] == 'Explanation 3'){
-              <p class="mt-2 text-gray-600">Explanation 3</p>
+            @if(selectedOptions['Explanation'] == 'MPE'){
+              <p style="font-size: 16px; text-align: center;" class="mt-2 text-gray-600">The Most Probable Explanation (MPE) method finds the single
+                most likely complete assignment of all unknown variables in a Bayesian network,
+                given some observed evidence. You can find more information on MPE in
+                <a href="https://www.socsci.ru.nl/johank/MPE_complexity_pp.pdf" style="color: blue; text-decoration: underline;">this</a>
+                paper by Johan Kwisthout.</p>
+              <table>
+                <tr>
+                  <th>Variable</th>
+                  <th>Value</th>
+                </tr>
+                <tr *ngFor="let entry of entries">
+                  <td>{{ entry[0] }}</td>
+                  <td>{{ entry[1] }}</td>
+                </tr>
+              </table>
             }
 
 

@@ -8,9 +8,7 @@ import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { AddEvidenceComponent } from '../../components/add-evidence/add-evidence.component';
 import { NetworkListComponent } from '../../components/network-list/network-list.component';
 import { ToastrService } from 'ngx-toastr';
-//this import needs to be replaced by the actual json file:
 import test_table_method_json from '../../../test_folder/table_metod.json'
-import language_method_json from '../../../test_folder/language_metod.json'
 import {AppRoutes} from '../../app.routes';
 import {Router} from '@angular/router';
 import { QuestionnaireComponent } from '../questionnaire/questionnaire.component';
@@ -19,7 +17,8 @@ import { TableMethodJsonModel } from '../../_models/TableMethodJson.model';
 import { PredictionService } from '../../_services/prediction.service';
 
 interface NetworkMetadata {
-  network_id: string;
+  id: string;
+  name: string;
   metadata: {
     [key: string]: {
       states: string[];
@@ -31,11 +30,11 @@ interface NetworkMetadata {
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [VariableDisplayComponent,
+  imports: [
     CommonModule,
     AddEvidenceComponent,
     MatDialogModule,
-    AddEvidenceComponent, ResultComponent],
+    ResultComponent],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
 })
@@ -45,12 +44,13 @@ export class HomeComponent {
   selectedNetwork: any;
   dropdownStates: { [key: string]: boolean } = {};
   dropdownItemsResults: string[] = ['results 1', 'Results 2', 'Results 3'];
-  dropdownItemsExplanation: string[] = ['Table method', 'Language method', 'Explanation 3'];
+  dropdownItemsExplanation: string[] = ['Table method', 'MPE'];
   selectedOptions: { [key: string]: string } = {'Explanation': 'Table method'};
   levelOneVisible: boolean = false;
   levelTwoVisible: boolean = false;
   levelThreeVisible: boolean = false;
   table_method_json: TableMethodJsonModel = test_table_method_json;
+  MPE_json: any = {}
 
   // here I have just used a test json file so far, it is not yet a json from the backend.
   query: string = this.table_method_json.prediction.variable_name;
@@ -60,13 +60,6 @@ export class HomeComponent {
   conflicting_evidence = this.table_method_json.opposing_factors;
   intermediate_nodes = this.table_method_json.immediate_causes;
   level_three_nodes = this.table_method_json.level3_explanations;
-
-
-  query1: string = language_method_json.query;
-  query_result1 = language_method_json.query_result;
-  non_conflicting_evidence1 = language_method_json.non_conflicting_evidence;
-  conflicting_evidence1 = language_method_json.conflicting_evidence;
-  intermediate_nodes1 = language_method_json.intermediate_nodes;
 
 
 
@@ -84,6 +77,10 @@ export class HomeComponent {
     } else {
       this.toastr.warning('Please select a network first', 'No Network Selected');
     }
+  }
+
+  get entries(){
+    return Object.entries(this.MPE_json.MPE)
   }
 
   closePopup() {
@@ -151,7 +148,6 @@ export class HomeComponent {
 
         console.log('Backend prediction response:', response);
         this.predictionService.setPredictionResult(response);
-
         this.query = response.prediction.variable_name;
         this.query_result_value = response.prediction.predicted_value;
         this.query_result_probability = response.prediction.probability;
@@ -160,17 +156,23 @@ export class HomeComponent {
         this.intermediate_nodes = response.immediate_causes;
         this.level_three_nodes = response.level3_explanations;
 
-        this.toastr.success(JSON.stringify(evidence), 'Evidence submitted successfully');
       },
       error: (err) => {
         console.error('Prediction failed:', err);
         this.toastr.error('Prediction failed', 'Error');
       }
     });
-  }
+    this.backend.predict_MPE(evidence).subscribe({
+      next: (response) => {
+        console.log('Backend prediction response:', response);
+        this.MPE_json = response;
 
-  openQuestionarePage() {
-    this.router.navigate([AppRoutes.QUESTIONNAIRE]);
+      },
+      error: (err) => {
+        console.error('Prediction failed:', err);
+        this.toastr.error('Prediction failed', 'Error');
+      }
+    });
   }
 
   openQuestionareAnswersPage() {
@@ -189,4 +191,15 @@ export class HomeComponent {
     });
   }
 
+  isAdmin() {
+    const userStr = localStorage.getItem('user');
+    if (!userStr) return false;
+
+    try {
+      const user = JSON.parse(userStr);
+      return user && user.role === 'admin';
+    } catch {
+      return false;
+    }
+  }
 }
