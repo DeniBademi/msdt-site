@@ -116,11 +116,11 @@ export class BackendService {
   }
 
   public predict(evidence: any): Observable<TableMethodJsonModel>{
-    return this.http.post<TableMethodJsonModel>('http://127.0.0.1:8000/api/predict/', evidence);
+    return this.http.post<TableMethodJsonModel>(this.backendURL + '/predict/', evidence);
   }
 
   public predict_MPE(evidence: any): Observable<any>{
-    return this.http.post<any>('http://127.0.0.1:8000/api/predict_MPE/', evidence);
+    return this.http.post<any>(this.backendURL + '/predict_MPE/', evidence);
   }
 
 }
