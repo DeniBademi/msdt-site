@@ -102,3 +102,58 @@ nav {
 }
  */
 
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+  .grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  .p-6 {
+    padding: 1rem;
+  }
+
+  .text-xl {
+    font-size: 1.1rem;
+  }
+
+  .space-y-4 > * + * {
+    margin-top: 1rem;
+  }
+}
+
+/* Ensure proper spacing in panels */
+.flex-grow {
+  min-height: 0;
+}
+
+/* Ensure proper scrolling for overflow content */
+.overflow-x-auto {
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Ensure proper spacing between sections */
+.space-y-4 > * + * {
+  margin-top: 1.5rem;
+}
+
+/* Ensure proper spacing in lists */
+.list-disc {
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+/* Ensure proper spacing in buttons */
+button {
+  transition: all 0.2s ease-in-out;
+}
+
+button:hover {
+  opacity: 0.9;
+}
+
+/* Ensure proper spacing in dropdowns */
+.dropdown-content {
+  max-height: 300px;
+  overflow-y: auto;
+}
+

@@ -15,28 +15,49 @@ import { MatDialog, MatDialogModule, MatDialogRef } from '@angular/material/dial
   styleUrl: './questionnaire.component.css'
 })
 export class QuestionnaireComponent implements OnInit {
-  form!: FormGroup ;
+  form!: FormGroup;
   questions: any[] = [];
+  ratings: { [key: string]: number } = {};
 
-  constructor(private fb: FormBuilder,
+  constructor(
+    private fb: FormBuilder,
     private backend: BackendService,
     private router: Router,
-    public dialogRef: MatDialogRef<QuestionnaireComponent> ) {}
+    public dialogRef: MatDialogRef<QuestionnaireComponent>
+  ) {}
 
-  async ngOnInit() {
+  ngOnInit() {
+    this.loadQuestions();
+  }
+
+  async loadQuestions() {
     try {
-      const data = await this.backend.getQuestions();
-      this.questions = data.questions;
+      const response = await this.backend.getQuestions();
+      this.questions = response.questions;
 
-      const group: any = {};
-      this.questions.forEach(q => {
-        group[q.id] = [''];
+      // Initialize form controls
+      const group: { [key: string]: any } = {};
+      this.questions.forEach(question => {
+        group[question.id] = [''];
       });
       this.form = this.fb.group(group);
-
     } catch (error) {
-      console.error('Failed to load questions:', error);
+      console.error('Error loading questions:', error);
     }
+  }
+
+  setRating(questionId: string, rating: number) {
+    this.ratings[questionId] = rating;
+    this.form.get(questionId)?.setValue(rating.toString());
+  }
+
+  getStarClass(questionId: string, star: number): string {
+    const rating = this.ratings[questionId] || 0;
+    return rating >= star ? 'text-yellow-400' : 'text-gray-300';
+  }
+
+  goBack() {
+    this.dialogRef.close();
   }
 
   async onSubmit(ev: Event) {
@@ -46,6 +67,7 @@ export class QuestionnaireComponent implements OnInit {
       alert('Please fill out all fields.');
       return;
     }
+
     const userId = Number(1);
     // const userId = Number(localStorage.getItem('userId'));
     if (!userId) {
@@ -53,13 +75,20 @@ export class QuestionnaireComponent implements OnInit {
       return;
     }
 
-
     const rawAnswers = this.form.value;
 
-    const answersArray = Object.entries(rawAnswers).map(([questionId, answerText]) => ({
-      question_id: Number(questionId),
-      answer_text: String(answerText)
-    }));
+    const answersArray = Object.entries(rawAnswers).map(([questionId, answerText]) => {
+      // For rating questions, use the rating value from our ratings object
+      const question = this.questions.find(q => q.id.toString() === questionId);
+      const value = question?.question_type === 'rating'
+        ? this.ratings[questionId]?.toString() || '0'
+        : String(answerText);
+
+      return {
+        question_id: Number(questionId),
+        answer_text: value
+      };
+    });
 
     try {
       const response = await this.backend.submitAnswers(answersArray);
@@ -72,8 +101,4 @@ export class QuestionnaireComponent implements OnInit {
       alert('Submission failed. Please try again.');
     }
   }
-
-  goBack() {
-    this.dialogRef.close();
-}
 }

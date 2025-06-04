@@ -19,7 +19,7 @@ export class BackendService {
     private localStorage: LocalStorageService
   ) { }
 
-  backendURL = 'https://msdt-backend-production.up.railway.app/api';
+  backendURL = 'http://msdt-backend-production.up.railway.app/api';
 
   public login(credentials: LoginCredentials): Promise<User> {
 
@@ -103,7 +103,11 @@ export class BackendService {
   }
 
   public downloadAnswersCsv(questionnaireId: number): void {
-    const params = new HttpParams().set('questionnaire_id', questionnaireId.toString());
+
+    const token = this.localStorage.getToken();
+
+    const params = new HttpParams().set('questionnaire_id', questionnaireId.toString()).set('token', token.toString()!);
+
     window.open(this.backendURL + '/download_answers_csv/?' + params.toString(), '_blank');
   }
 

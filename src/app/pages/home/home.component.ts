@@ -45,23 +45,23 @@ export class HomeComponent {
   dropdownStates: { [key: string]: boolean } = {};
   dropdownItemsResults: string[] = ['results 1', 'Results 2', 'Results 3'];
   dropdownItemsExplanation: string[] = ['Table method', 'MPE'];
-  selectedOptions: { [key: string]: string } = {'Explanation': 'Table method'};
+  selectedOptions: { [key: string]: string } = {};
   levelOneVisible: boolean = false;
   levelTwoVisible: boolean = false;
   levelThreeVisible: boolean = false;
-  table_method_json: TableMethodJsonModel = test_table_method_json;
-  MPE_json: any = {}
+  table_method_json: TableMethodJsonModel | null = null;
+  MPE_json: any = null;
+  isMobileMenuOpen = false;
+  hasPrediction: boolean = false;
 
-  // here I have just used a test json file so far, it is not yet a json from the backend.
-  query: string = this.table_method_json.prediction.variable_name;
-  query_result_value = this.table_method_json.prediction.predicted_value;
-  query_result_probability = this.table_method_json.prediction.probability;
-  non_conflicting_evidence = this.table_method_json.supporting_factors;
-  conflicting_evidence = this.table_method_json.opposing_factors;
-  intermediate_nodes = this.table_method_json.immediate_causes;
-  level_three_nodes = this.table_method_json.level3_explanations;
-
-
+  // Initialize with null values
+  query: string | null = null;
+  query_result_value: string | null = null;
+  query_result_probability: number | null = null;
+  non_conflicting_evidence: any[] = [];
+  conflicting_evidence: any[] = [];
+  intermediate_nodes: any[] = [];
+  level_three_nodes: any[] = [];
 
   constructor(
     private router: Router,
@@ -97,6 +97,10 @@ export class HomeComponent {
   }
 
   selectOption(menu: string, option: string) {
+    if (menu === 'Explanation' && !this.hasPrediction) {
+      this.toastr.warning('Please make a prediction first', 'No Prediction Available');
+      return;
+    }
     this.selectedOptions[menu] = option;
     this.dropdownStates[menu] = false;
   }
@@ -142,37 +146,51 @@ export class HomeComponent {
 
   onEvidenceSubmit(evidence: any) {
     console.log('Evidence submitted:', evidence);
+
+    // Reset prediction state
+    this.hasPrediction = false;
+    this.selectedOptions['Explanation'] = '';
+    this.table_method_json = null;
+    this.MPE_json = null;
+    this.query = null;
+    this.query_result_value = null;
+    this.query_result_probability = null;
+    this.non_conflicting_evidence = [];
+    this.conflicting_evidence = [];
+    this.intermediate_nodes = [];
+    this.level_three_nodes = [];
+
+    // Get prediction based on selected method
     this.backend.predict(evidence).subscribe({
-      next: (response) => {
-        this.table_method_json = response;
-
-        console.log('Backend prediction response:', response);
-        this.predictionService.setPredictionResult(response);
-        this.query = response.prediction.variable_name;
-        this.query_result_value = response.prediction.predicted_value;
-        this.query_result_probability = response.prediction.probability;
-        this.non_conflicting_evidence = response.supporting_factors;
-        this.conflicting_evidence = response.opposing_factors;
-        this.intermediate_nodes = response.immediate_causes;
-        this.level_three_nodes = response.level3_explanations;
-
-      },
-      error: (err) => {
-        console.error('Prediction failed:', err);
-        this.toastr.error('Prediction failed', 'Error');
-      }
-    });
+        next: (response) => {
+          this.table_method_json = response;
+          console.log('Backend prediction response:', response);
+          this.predictionService.setPredictionResult(response);
+          this.query = response.prediction.variable_name;
+          this.query_result_value = response.prediction.predicted_value;
+          this.query_result_probability = response.prediction.probability;
+          this.non_conflicting_evidence = response.supporting_factors;
+          this.conflicting_evidence = response.opposing_factors;
+          this.intermediate_nodes = response.immediate_causes;
+          this.level_three_nodes = response.level3_explanations;
+          this.hasPrediction = true;
+        },
+        error: (err) => {
+          console.error('Prediction failed:', err);
+          this.toastr.error('Prediction failed', 'Error');
+        }
+      });
     this.backend.predict_MPE(evidence).subscribe({
-      next: (response) => {
-        console.log('Backend prediction response:', response);
-        this.MPE_json = response;
-
-      },
-      error: (err) => {
-        console.error('Prediction failed:', err);
-        this.toastr.error('Prediction failed', 'Error');
-      }
-    });
+        next: (response) => {
+          console.log('Backend prediction response:', response);
+          this.MPE_json = response;
+          this.hasPrediction = true;
+        },
+        error: (err) => {
+          console.error('Prediction failed:', err);
+          this.toastr.error('Prediction failed', 'Error');
+        }
+      });
   }
 
   openQuestionareAnswersPage() {
@@ -201,5 +219,9 @@ export class HomeComponent {
     } catch {
       return false;
     }
+  }
+
+  toggleMobileMenu() {
+    this.isMobileMenuOpen = !this.isMobileMenuOpen;
   }
 }
