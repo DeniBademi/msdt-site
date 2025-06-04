@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup} from '@angular/forms';
+import { FormBuilder, FormGroup, Validators} from '@angular/forms';
 import{ReactiveFormsModule} from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { Router, RouterModule } from '@angular/router';
 import { BackendService } from '../../_services/backend.service';
 import { HttpClient } from '@angular/common/http';
 import { MatDialog, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-questionnaire',
@@ -18,11 +19,13 @@ export class QuestionnaireComponent implements OnInit {
   form!: FormGroup;
   questions: any[] = [];
   ratings: { [key: string]: number } = {};
+  isFormValid: boolean = false;
 
   constructor(
     private fb: FormBuilder,
     private backend: BackendService,
     private router: Router,
+    private toastr: ToastrService,
     public dialogRef: MatDialogRef<QuestionnaireComponent>
   ) {}
 
@@ -38,21 +41,52 @@ export class QuestionnaireComponent implements OnInit {
       // Initialize form controls
       const group: { [key: string]: any } = {};
       this.questions.forEach(question => {
-        group[question.id] = [''];
+        // Add required validator if the question is required
+        const validators = question.required ? [Validators.required] : [];
+        // Ensure we use string IDs for form controls
+        const questionId = question.id.toString();
+        group[questionId] = ['', validators];
       });
       this.form = this.fb.group(group);
+
+      // Subscribe to form value changes to update validity
+      this.form.valueChanges.subscribe(() => {
+        this.updateFormValidity();
+      });
     } catch (error) {
       console.error('Error loading questions:', error);
     }
   }
 
-  setRating(questionId: string, rating: number) {
-    this.ratings[questionId] = rating;
-    this.form.get(questionId)?.setValue(rating.toString());
+  updateFormValidity() {
+    // Check if all required questions have non-empty answers
+    const isValid = this.questions.every(question => {
+      if (!question.required) return true;
+
+      const questionId = question.id.toString();
+      const control = this.form.get(questionId);
+      if (!control) return false;
+
+      const value = control.value;
+      if (question.question_type === 'rating') {
+        return this.ratings[questionId] !== undefined;
+      }
+      return value && value.trim() !== '';
+    });
+
+    this.isFormValid = isValid;
   }
 
-  getStarClass(questionId: string, star: number): string {
-    const rating = this.ratings[questionId] || 0;
+  setRating(questionId: number, rating: number) {
+    const questionIdStr = questionId.toString();
+    this.ratings[questionIdStr] = rating;
+    this.form.get(questionIdStr)?.setValue(rating.toString());
+    this.updateFormValidity();
+  }
+
+  getStarClass(questionId: number, star: number): string {
+    const questionIdStr = questionId.toString();
+    const rating = this.ratings[questionIdStr] || 0;
     return rating >= star ? 'text-yellow-400' : 'text-gray-300';
   }
 
@@ -63,15 +97,15 @@ export class QuestionnaireComponent implements OnInit {
   async onSubmit(ev: Event) {
     ev.preventDefault();
 
-    if (this.form.invalid) {
-      alert('Please fill out all fields.');
+    if (!this.isFormValid) {
+      this.toastr.error('Please fill out all required fields.');
       return;
     }
 
     const userId = Number(1);
     // const userId = Number(localStorage.getItem('userId'));
     if (!userId) {
-      alert('User ID not found. Please log in first.');
+      this.toastr.error('User ID not found. Please log in first.');
       return;
     }
 
@@ -81,7 +115,7 @@ export class QuestionnaireComponent implements OnInit {
       // For rating questions, use the rating value from our ratings object
       const question = this.questions.find(q => q.id.toString() === questionId);
       const value = question?.question_type === 'rating'
-        ? this.ratings[questionId]?.toString() || '0'
+        ? this.ratings[questionId]?.toString() || ''
         : String(answerText);
 
       return {
@@ -93,12 +127,12 @@ export class QuestionnaireComponent implements OnInit {
     try {
       const response = await this.backend.submitAnswers(answersArray);
       console.log('Backend response:', response);
-      alert('Thanks for your feedback!');
+      this.toastr.success('Thanks for your feedback!');
       this.dialogRef.close();
-      this.router.navigate(['/saved-answers']);
+      // this.router.navigate(['/saved-answers']);
     } catch (error) {
       console.error('Error submitting answers:', error);
-      alert('Submission failed. Please try again.');
+      this.toastr.error('Submission failed. Please try again.');
     }
   }
 }

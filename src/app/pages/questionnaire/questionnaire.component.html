@@ -7,7 +7,10 @@
 
     <div *ngIf="questions.length > 0" class="space-y-4">
       <div *ngFor="let question of questions" class="p-2">
-        <label class="block text-sm font-medium text-gray-700 mb-1">{{ question.text }}</label>
+        <label class="block text-sm font-medium text-gray-700 mb-1">
+          {{ question.text }}
+          <span *ngIf="question.required" class="text-red-500 ml-1">*</span>
+        </label>
 
         <!-- Rating question type -->
         <div *ngIf="question.question_type === 'rating'" class="flex items-center space-x-2">
@@ -23,6 +26,7 @@
           *ngIf="question.question_type === 'text'"
           [formControlName]="question.id"
           rows="4"
+          [class.border-red-500]="question.required && form.get(question.id)?.invalid && form.get(question.id)?.touched"
           class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 transition-colors duration-200 ease-in-out"
         ></textarea>
       </div>
@@ -39,6 +43,9 @@
       <button
         type="submit"
         class="confirm-btn"
+        [disabled]="!isFormValid"
+        [class.opacity-50]="!isFormValid"
+        [class.cursor-not-allowed]="!isFormValid"
       >
         Submit Feedback
       </button>
