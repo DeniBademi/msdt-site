@@ -19,7 +19,7 @@ export class BackendService {
     private localStorage: LocalStorageService
   ) { }
 
-  backendURL = 'http://msdt-backend-production.up.railway.app/api';
+  backendURL = 'https://msdt-backend-production.up.railway.app/api';
 
   public login(credentials: LoginCredentials): Promise<User> {
 
