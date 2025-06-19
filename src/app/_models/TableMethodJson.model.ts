@@ -1,3 +1,6 @@
+/**
+ * Represents the JSON model structure for a table-based explanation method.
+ */
 export interface TableMethodJsonModel {
   prediction: {
     variable_name: string;

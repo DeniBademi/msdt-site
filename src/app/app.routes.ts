@@ -7,12 +7,14 @@ import { RouterModule } from '@angular/router';//E
 import { SavedAnswersComponent } from './pages/saved-answers/saved-answers.component';//E
 import { AdminGuard } from './_guards/admin.guard';
 import { AuthGuard } from './_guards/auth.guard';
+import { SettingsComponent } from './pages/settings/settings.component';
+
 export enum AppRoutes {
   LOGIN = 'login',
   SIGNUP = `sign-up`,
   HOME = 'home',
-  SAVEDANSWERS = 'saved-answers'
-
+  SAVEDANSWERS = 'saved-answers',
+  SETTINGS = 'settings'
 }
 
 export const routes: Routes = [
@@ -21,6 +23,7 @@ export const routes: Routes = [
   {path: AppRoutes.SIGNUP, component: SignUpComponent},
   {path: AppRoutes.HOME, component: HomeComponent, canActivate: [AuthGuard]},
   {path: AppRoutes.SAVEDANSWERS, component: SavedAnswersComponent, canActivate: [AdminGuard]},//E
+  {path: AppRoutes.SETTINGS, component: SettingsComponent, canActivate: [AuthGuard]},
 ]
 
 //E

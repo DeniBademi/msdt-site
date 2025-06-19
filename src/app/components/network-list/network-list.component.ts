@@ -14,6 +14,10 @@ interface Network {
   templateUrl: './network-list.component.html',
   styleUrl: './network-list.component.css'
 })
+
+/**
+ * Component for displaying a list of Bayesian networks and allowing the user to select one.
+ */
 export class NetworkListComponent implements OnInit {
   networks: Network[] = [];
   loading = true;
@@ -27,6 +31,10 @@ export class NetworkListComponent implements OnInit {
     this.loadNetworks();
   }
 
+  /**
+   * gets the list of networks from the backend service.
+   * Sets `networks` on success, or updates `error` on failure.
+   */
   loadNetworks(): void {
     this.loading = true;
     this.error = null;
@@ -43,6 +51,10 @@ export class NetworkListComponent implements OnInit {
       });
   }
 
+  /**
+   * Emits the selected network when a user clicks one from the list.
+   * @param network The network selected by the user.
+   */
   selectNetwork(network: Network): void {
     this.networkSelected.emit(network);
   }

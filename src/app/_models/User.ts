@@ -1,6 +1,8 @@
 import { Token } from "./Token";
 
-
+/**
+ * Represents a user in the application, including authentication token and role.
+ */
 export class User {
     constructor(username : string, role: string, token: Token){
         this.username=username;

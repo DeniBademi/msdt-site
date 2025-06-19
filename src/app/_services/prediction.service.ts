@@ -11,6 +11,11 @@ export interface PredictionResult {
 @Injectable({
   providedIn: 'root'
 })
+
+/**
+ * Service to store, retrieve, and manage prediction results and explanations
+ * It uses a BehaviorSubject to allow reactive updates in the application
+ */
 export class PredictionService {
   private predictionResultSubject = new BehaviorSubject<PredictionResult | null>(null);
   public predictionResult$ = this.predictionResultSubject.asObservable();
@@ -43,10 +48,17 @@ export class PredictionService {
     this.predictionResultSubject.next(predictionResult);
   }
 
+  /**
+   * Retrieves the current prediction result stored in the service
+   * @returns The latest `PredictionResult`, or `null` if none is set
+   */
   getPredictionResult(): PredictionResult | null {
     return this.predictionResultSubject.value;
   }
 
+  /**
+   * Clears the current prediction result
+   */
   clearPredictionResult(): void {
     this.predictionResultSubject.next(null);
   }

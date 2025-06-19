@@ -1,3 +1,6 @@
+/**
+ * Represents the credentials required for a user to sign up.
+ */
 export class SignUpCredentials {
   constructor(username: string, password: string, role?: string, admin_code?: string) {
     this.username = username;

@@ -4,7 +4,9 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { BehaviorSubject, Subscription } from 'rxjs';
 import { BackendService } from '../../_services/backend.service';
 
-
+/**
+ * Interface representing the metadata structure for a Bayesian network.
+ */
 interface NetworkMetadata {
   id: string;
   name: string;
@@ -15,6 +17,9 @@ interface NetworkMetadata {
   };
 }
 
+/**
+ * Interface for the structure of a submission object containing evidence and the query variable.
+ */
 interface EvidenceSubmission {
   query: string;
   evidence: { [key: string]: string };
@@ -28,6 +33,9 @@ interface EvidenceSubmission {
   standalone: true,
   styleUrl: './add-evidence.component.css'
 })
+/**
+ * A component for users to input evidence and specify a query variable for probabilistic inference.
+ */
 export class AddEvidenceComponent implements OnInit, OnDestroy {
   private metadataSubject = new BehaviorSubject<NetworkMetadata | null>(null);
   private subscription: Subscription = new Subscription();
@@ -51,6 +59,9 @@ export class AddEvidenceComponent implements OnInit, OnDestroy {
     this.evidenceForm = this.fb.group({});
   }
 
+  /**
+   * Initializes the component and subscribes to metadata updates to build the form.
+   */
   ngOnInit() {
     this.subscription = this.metadataSubject.subscribe(metadata => {
       this.currentMetadata = metadata;
@@ -60,10 +71,17 @@ export class AddEvidenceComponent implements OnInit, OnDestroy {
     });
   }
 
+  /**
+   * Cleans up the subscription to prevent memory leaks.
+   */
   ngOnDestroy() {
     this.subscription.unsubscribe();
   }
 
+  /**
+   * Builds the dynamic form controls based on the variables in the metadata.
+   * @param metadata The network metadata containing variable names and states.
+   */
   private buildForm(metadata: NetworkMetadata) {
     const formControls: { [key: string]: any } = {};
     Object.keys(metadata.metadata).forEach(variable => {
@@ -73,6 +91,10 @@ export class AddEvidenceComponent implements OnInit, OnDestroy {
     this.selectedQuery = null;
   }
 
+  /**
+   * Sets or unsets a variable as the query. Only one query variable can be selected at a time.
+   * @param variable The name of the variable to toggle as the query.
+   */
   setQueryVariable(variable: string) {
     if (this.selectedQuery === variable) {
       this.selectedQuery = null;
@@ -86,10 +108,18 @@ export class AddEvidenceComponent implements OnInit, OnDestroy {
 
   }
 
+  /**
+   * Checks whether the given variable is currently selected as the query variable.
+   * @param variable The name of the variable to check.
+   * @returns True if the variable is the current query, false otherwise.
+   */
   isQueryVariable(variable: string): boolean {
     return this.selectedQuery === variable;
   }
 
+  /**
+   * Handles the form submission: collects evidence, emits submission, and invokes prediction.
+   */
   async onSubmit() {
     if (this.evidenceForm.valid && this.selectedQuery) {
       this.isLoading = true;
@@ -122,18 +152,25 @@ export class AddEvidenceComponent implements OnInit, OnDestroy {
         this.submitEvidence.emit(submission);
       } catch (error) {
         console.error('Error submitting prediction:', error);
-        // You might want to show an error message to the user here
       } finally {
         this.isLoading = false;
         this.enableAllVariables();
       }
     }
   }
+
+  /**
+   * Disables all form controls
+   */
   disableAllVariables() {
     Object.keys(this.evidenceForm.value).forEach(variable => {
       this.evidenceForm.get(variable)?.disable();
     });
   }
+
+  /**
+   * Enables all form controls
+   */
   enableAllVariables() {
     Object.keys(this.evidenceForm.value).forEach(variable => {
       this.evidenceForm.get(variable)?.enable();

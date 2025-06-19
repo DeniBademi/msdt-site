@@ -183,8 +183,12 @@ export class HomeComponent {
     this.backend.predict_MPE(evidence).subscribe({
         next: (response) => {
           console.log('Backend prediction response:', response);
-          this.MPE_json = response;
-          this.hasPrediction = true;
+          if (response['error']) {
+            this.toastr.error(response['error'], 'Error');
+          } else {
+            this.MPE_json = response;
+            this.hasPrediction = true;
+          }
         },
         error: (err) => {
           console.error('Prediction failed:', err);
@@ -223,5 +227,9 @@ export class HomeComponent {
 
   toggleMobileMenu() {
     this.isMobileMenuOpen = !this.isMobileMenuOpen;
+  }
+
+  openSettings() {
+    this.router.navigate([AppRoutes.SETTINGS]);
   }
 }
