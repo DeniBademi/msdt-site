@@ -38,7 +38,30 @@
     </form>
   </div>
 
+  <!-- Evidence Summary Display -->
+  <div class="px-4 py-3 border-t border-gray-200 bg-gray-50">
+    <div class="text-sm font-medium text-gray-700 mb-2">
+      Current Evidence ({{ getEvidenceCount() }} items):
+    </div>
+    <div *ngIf="getEvidenceCount() > 0" class="space-y-1 max-h-32 overflow-y-auto">
+      <div *ngFor="let evidence of getCurrentEvidence() | keyvalue" class="text-sm text-gray-600 bg-white px-3 py-2 rounded border">
+        <span class="font-medium">{{ evidence.key }}:</span> {{ evidence.value }}
+      </div>
+    </div>
+    <div *ngIf="getEvidenceCount() === 0" class="text-sm text-gray-500 italic">
+      No evidence input yet. Please select values for variables above.
+    </div>
+  </div>
+
   <div class="flex justify-center space-x-3 p-4 border-t border-gray-200">
+    <button
+      type="button"
+      class="px-4 py-2 bg-gray-500 text-white rounded hover:bg-gray-600 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center min-w-[100px]"
+      (click)="clearEvidence()"
+      [disabled]="getEvidenceCount() === 0"
+    >
+      Clear Evidence
+    </button>
     <button
       type="submit"
       class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center min-w-[100px]"

@@ -176,4 +176,37 @@ export class AddEvidenceComponent implements OnInit, OnDestroy {
       this.evidenceForm.get(variable)?.enable();
     });
   }
+
+  /**
+   * Gets the current evidence that has been input so far
+   * @returns An object containing the current evidence values
+   */
+  getCurrentEvidence(): { [key: string]: string } {
+    const evidence: { [key: string]: string } = {};
+    Object.entries(this.evidenceForm.value).forEach(([variable, value]) => {
+      if (value && variable !== this.selectedQuery) {
+        evidence[variable] = value as string;
+      }
+    });
+    return evidence;
+  }
+
+  /**
+   * Gets the number of evidence items currently input
+   * @returns The count of evidence items
+   */
+  getEvidenceCount(): number {
+    return Object.keys(this.getCurrentEvidence()).length;
+  }
+
+  /**
+   * Clears all evidence inputs while preserving the query variable selection
+   */
+  clearEvidence() {
+    Object.keys(this.evidenceForm.value).forEach(variable => {
+      if (variable !== this.selectedQuery) {
+        this.evidenceForm.get(variable)?.setValue('');
+      }
+    });
+  }
 }
