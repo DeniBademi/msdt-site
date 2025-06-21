@@ -24,7 +24,7 @@ export class BackendService {
     private localStorage: LocalStorageService
   ) { }
 
-  backendURL = 'https://msdt-backend-production.up.railway.app/api';
+  backendURL = 'http://127.0.0.1:8000/api';
 
   /**
    * Log in a user by sending login credentials to backend

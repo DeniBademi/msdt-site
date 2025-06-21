@@ -29,10 +29,10 @@ export class PredictionService {
       return;
     }
 
-    if(result.supporting_factors.length === 0) {
-      this.toastr.error("Failed to get explanation results");
-      return;
-    }
+    // if(result.supporting_factors.length === 0) {
+    //   this.toastr.error("Failed to get explanation results");
+    //   return;
+    // }
 
     let explanation: { [key: string]: any } = {};
     explanation['supporting_factors'] = result.supporting_factors;

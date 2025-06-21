@@ -116,7 +116,7 @@
                     <div class="mt-4">
                       <p>
                         The percentage of change in the uncertainty of <b>{{query}}</b> between
-                        this scenario and the average scenario is <b>{{query_result_value}}</b> is <b>{{query_result_probability ? (query_result_probability ).toFixed(2) : '0.00'}}%</b>.
+                        this scenario and the average scenario is <b>{{query_result_value}}</b> is <b>{{query_result_probability ? (query_result_probability * 100 ).toFixed(2) : '0.00'}}%</b>.
                       </p>
                       <hr class="my-4">
                       <p class="font-bold mb-2">What are the factors that support the above prediction of <b>{{query}}</b>?</p>
